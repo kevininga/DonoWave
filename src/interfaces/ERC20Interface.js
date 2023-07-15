@@ -1,6 +1,5 @@
 import { Alchemy, Network } from 'alchemy-sdk'
 import { ethers } from 'ethers';
-import { utils } from 'ethers';
 import erc20ContractABI from '../contracts/ABIs/erc20ABI.js';
 import connectToContract from '../util/contractConnection.js';
 
