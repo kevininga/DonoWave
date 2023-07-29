@@ -1,4 +1,14 @@
 /* Nav animation and Media Queries...*/
+@media screen and (min-width: 1200px) {
+  .logo-large-screen {
+    margin-left: -7rem; /* adjust this value as needed */
+  }
+}
+@media screen and (min-width: 1000px) and (max-width: 1199px) {
+  .logo-large-screen {
+    margin-left: -3rem; /* adjust this value as needed */
+  }
+}
 
 .sticky-nav {
     position: sticky;

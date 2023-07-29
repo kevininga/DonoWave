@@ -4,7 +4,7 @@ import SingleCampaign from "../components/SingleCampaign";
 import { CampaignContext } from "../context/campaignContextComponent";
 import { getCampaigns } from "../api/campaignService";
 import categoryURLs from "../data/categoryURLs";
-
+import "./Home.css";
 
 const Home = () => {
   const { campaigns, setCampaigns } = useContext(CampaignContext);
@@ -84,14 +84,26 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center mt-8 w-full mx-auto max-w-screen-lg z-50">
       <div className="w-10/12 mt-4 bg-white rounded-md py-8">
-        <div className="w-full text-center">
-          {/* <label {...getLabelProps()} className="font-bold text-xs">SEARCH:</label> */}
+        <div className="search-container w-full text-center">
           <input {...getInputProps()} className="block w-3/4 mx-auto rounded-full border-0 py-1.5 pl-5 pr-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-black placeholder:font-bold focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-xs leading-6 mt-1" placeholder="SEARCH FOR CAMPAIGN TITLE" />
+          <ul {...getMenuProps()} className="results-list bg-white shadow-md rounded h-full">
+            {isOpen &&
+              inputValue &&
+              filteredItems.map((item, index) => {
+                const itemIndex = items.indexOf(item);
+                return (
+                  <li key={item} {...getItemProps({ index: itemIndex, item })} className={`${highlightedIndex === itemIndex ? 'bg-gray-200' : ''
+                    } ${selectedItem === item ? 'font-bold' : ''} p-1`}>
+                    {item}
+                  </li>
+                );
+              })}
+          </ul>
           <button {...getToggleButtonProps()} aria-label="toggle menu" />
         </div>
 
         <div className="w-full text-center">
-          <select value={category} onChange={handleCategoryChange} className="w-3/4 mx-auto font-bold text-xs bg-white rounded-full border-0 py-1.5 pl-5 pr-4 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-6 mt-1 mb-2">
+          <select value={category} onChange={handleCategoryChange} className="w-3/4 mx-auto font-bold text-xs bg-white rounded-full border-0 py-1.5 pl-5 pr-4 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-6 mt-1 mb-2 pr-8">
             <option value="" className="font-bold text-xs">ALL CATEGORIES</option>
             {categoryURLs.map((cat, index) => (
               <option key={index} value={cat.category}>
@@ -104,20 +116,6 @@ const Home = () => {
             RESET
           </button>
         </div>
-
-        <ul {...getMenuProps()} className="bg-white shadow-md rounded h-full">
-          {isOpen &&
-            inputValue &&
-            filteredItems.map((item, index) => {
-              const itemIndex = items.indexOf(item);
-              return (
-                <li key={item} {...getItemProps({ index: itemIndex, item })} className={`${highlightedIndex === itemIndex ? 'bg-gray-200' : ''
-                  } ${selectedItem === item ? 'font-bold' : ''} p-1`}>
-                  {item}
-                </li>
-              );
-            })}
-        </ul>
       </div>
 
       <div className="campaignFeed w-10/12 mt-8">
